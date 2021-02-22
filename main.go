@@ -5,16 +5,22 @@ import (
 	"net/http"
 )
 
-func main(){
-	
-	http.HandleFunc("/", func (w http.ResponseWriter, r * http.Request){
-		fmt.Fprintf(w, "Bem-vindo")
-	});
+func  healthCheckServer(w http.ResponseWriter, r * http.Request){
+	fmt.Fprintf(w, "Conexão estabelecida com sucesso.")
+}
+
+
+func serverConfig(){
+	http.HandleFunc("/", healthCheckServer );
 
 	err := http.ListenAndServe(":1337", nil); // DefaultServerMux
 	if err != nil{
 		fmt.Println(err);
 	}
+}
+
+func main(){
+	serverConfig();
 
 
 }
