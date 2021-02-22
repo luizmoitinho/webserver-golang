@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"log"
 	"encoding/json"
 )
 
@@ -15,7 +16,7 @@ type Book struct {
 	Id int
 	Titulo string
 	Autor string
-	//Editora Editora
+	Editora Editora
 }
 
 var Books []Book = []Book{
@@ -45,11 +46,11 @@ func serverConfig(){
 
 	http.HandleFunc("/", healthCheckServer );
 	http.HandleFunc("/books", getAllBooks );
+	
+	fmt.Println("Servidor está operando na porta: 1337");
 
-	err := http.ListenAndServe(":1337", nil); // DefaultServerMux
-	if err != nil{
-		fmt.Println(err);
-	}
+	log.Fatal(http.ListenAndServe(":1337", nil)); // DefaultServerMux
+
 }
 
 func main(){
